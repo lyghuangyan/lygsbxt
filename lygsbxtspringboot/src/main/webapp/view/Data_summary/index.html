@@ -1,0 +1,53 @@
+<div>
+    <div class="tab">
+        <div class="tabDiv">
+            <table>
+                <thead>
+                <tr>
+                    <th>时间</th>
+                        <th>全部</th>
+                        <th>待维修</th>
+                        <th>维修中</th>
+                        <th>待评价</th>
+                        <th>已完成</th>
+                </tr>
+                </thead>
+                <tbody id="tBody">
+                </tbody>
+            </table>
+            <div id="page"></div>
+        </div>
+
+    </div>
+</div>
+<script>
+    $(function () {
+        //加载第一页数据
+        getList()
+    });
+    function getList() {
+        var para={
+            url:'/lygsbxt/report/dataSummary',
+            data:{},
+            successHandler:function (data) {
+            	console.info(data);
+                bindList(data.data)
+            }
+        };
+        ajaxSubmit(para)
+    }
+    function bindList(data) {
+    	var str='';
+        for(var i=0;i<data.length;i++){
+            str+=' <tr>\n' +
+                '<td>'+data[i].time+'</td>\n' +
+                '<td>'+data[i].all+'</td>\n' +
+                '<td>'+data[i].wait+'</td>\n' +
+                '<td>'+data[i].maintain+'</td>\n' +
+                '<td>'+data[i].maintained+'</td>\n' +
+                '<td>'+data[i].completed+'</td>\n' +
+                '</tr>'
+        }
+        $('#tBody').html(str);
+    }
+</script>

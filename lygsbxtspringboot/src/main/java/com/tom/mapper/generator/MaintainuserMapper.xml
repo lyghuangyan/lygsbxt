@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tom.dao.generator.MaintainuserMapper">
+  <resultMap id="BaseResultMap" type="com.tom.model.generator.Maintainuser">
+    <id column="maintainid" jdbcType="VARCHAR" property="maintainid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="photourl" jdbcType="VARCHAR" property="photourl" />
+    <result column="allstars" jdbcType="INTEGER" property="allstars" />
+    <result column="commentcount" jdbcType="INTEGER" property="commentcount" />
+    <result column="averagestars" jdbcType="REAL" property="averagestars" />
+    <result column="isdelete" jdbcType="INTEGER" property="isdelete" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    maintainid, username, password, realname, photourl, allstars, commentcount, averagestars, 
+    isdelete, remark
+  </sql>
+  <select id="selectByExample" parameterType="com.tom.model.generator.MaintainuserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from maintainuser
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from maintainuser
+    where maintainid = #{maintainid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from maintainuser
+    where maintainid = #{maintainid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tom.model.generator.MaintainuserExample">
+    delete from maintainuser
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tom.model.generator.Maintainuser">
+    insert into maintainuser (maintainid, username, password, 
+      realname, photourl, allstars, 
+      commentcount, averagestars, isdelete, 
+      remark)
+    values (#{maintainid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{realname,jdbcType=VARCHAR}, #{photourl,jdbcType=VARCHAR}, #{allstars,jdbcType=INTEGER}, 
+      #{commentcount,jdbcType=INTEGER}, #{averagestars,jdbcType=REAL}, #{isdelete,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tom.model.generator.Maintainuser">
+    insert into maintainuser
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="maintainid != null">
+        maintainid,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="realname != null">
+        realname,
+      </if>
+      <if test="photourl != null">
+        photourl,
+      </if>
+      <if test="allstars != null">
+        allstars,
+      </if>
+      <if test="commentcount != null">
+        commentcount,
+      </if>
+      <if test="averagestars != null">
+        averagestars,
+      </if>
+      <if test="isdelete != null">
+        isdelete,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="maintainid != null">
+        #{maintainid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="photourl != null">
+        #{photourl,jdbcType=VARCHAR},
+      </if>
+      <if test="allstars != null">
+        #{allstars,jdbcType=INTEGER},
+      </if>
+      <if test="commentcount != null">
+        #{commentcount,jdbcType=INTEGER},
+      </if>
+      <if test="averagestars != null">
+        #{averagestars,jdbcType=REAL},
+      </if>
+      <if test="isdelete != null">
+        #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tom.model.generator.MaintainuserExample" resultType="java.lang.Long">
+    select count(*) from maintainuser
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update maintainuser
+    <set>
+      <if test="record.maintainid != null">
+        maintainid = #{record.maintainid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realname != null">
+        realname = #{record.realname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.photourl != null">
+        photourl = #{record.photourl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allstars != null">
+        allstars = #{record.allstars,jdbcType=INTEGER},
+      </if>
+      <if test="record.commentcount != null">
+        commentcount = #{record.commentcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.averagestars != null">
+        averagestars = #{record.averagestars,jdbcType=REAL},
+      </if>
+      <if test="record.isdelete != null">
+        isdelete = #{record.isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update maintainuser
+    set maintainid = #{record.maintainid,jdbcType=VARCHAR},
+      username = #{record.username,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      realname = #{record.realname,jdbcType=VARCHAR},
+      photourl = #{record.photourl,jdbcType=VARCHAR},
+      allstars = #{record.allstars,jdbcType=INTEGER},
+      commentcount = #{record.commentcount,jdbcType=INTEGER},
+      averagestars = #{record.averagestars,jdbcType=REAL},
+      isdelete = #{record.isdelete,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tom.model.generator.Maintainuser">
+    update maintainuser
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="photourl != null">
+        photourl = #{photourl,jdbcType=VARCHAR},
+      </if>
+      <if test="allstars != null">
+        allstars = #{allstars,jdbcType=INTEGER},
+      </if>
+      <if test="commentcount != null">
+        commentcount = #{commentcount,jdbcType=INTEGER},
+      </if>
+      <if test="averagestars != null">
+        averagestars = #{averagestars,jdbcType=REAL},
+      </if>
+      <if test="isdelete != null">
+        isdelete = #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where maintainid = #{maintainid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tom.model.generator.Maintainuser">
+    update maintainuser
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      photourl = #{photourl,jdbcType=VARCHAR},
+      allstars = #{allstars,jdbcType=INTEGER},
+      commentcount = #{commentcount,jdbcType=INTEGER},
+      averagestars = #{averagestars,jdbcType=REAL},
+      isdelete = #{isdelete,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where maintainid = #{maintainid,jdbcType=VARCHAR}
+  </update>
+</mapper>

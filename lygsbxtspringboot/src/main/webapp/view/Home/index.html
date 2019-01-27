@@ -1,0 +1,422 @@
+<style>
+    .statistics:after{
+        display: block;
+        content:'';
+        clear: both;
+    }
+    .statistics .workload{
+        float: left;
+        width: 49%;
+    }
+    .statistics .satisfaction{
+        float: right;
+        width: 49%;
+    }
+</style>
+<div>
+    <div class="declare">
+        <div class="tab">
+            <div class="nav">
+                <h5><img src="../images/declare.png" alt="">最新申报</h5>
+                <ul>
+                    <li><span class="cur" dataState="">全部</span></li>
+                    <li><span dataState="待维修">待维修</span></li>
+                    <li><span dataState="维修中">维修中</span></li>
+                    <li><span dataState="待评价">待评价</span></li>
+                    <li><span dataState="已完成">已完成</span></li>
+                    <li class="more"><a href="javascript:;" dataHref="Data_search/index.html" dataType="1">更多>></a></li>
+                </ul>
+            </div>
+            <div class="tabDiv">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>标题</th>
+                        <th>内容</th>
+                        <th>报修人</th>
+                        <th>报修时间</th>
+                        <th>维修人</th>
+                        <th>状态</th>
+                    </tr>
+                    </thead>
+                    <tbody id="declareTab">
+                    <tr>
+                        <td>ddddd</td>
+                        <td>ddddd</td>
+                        <td>ddddd</td>
+                        <td>ddddd</td>
+                        <td>ddddd</td>
+                        <td>ddddd</td>
+                        <td>ddddd</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="dataSummary" style="margin-top: 20px">
+        <div class="tab">
+            <div class="nav">
+                <h5><img src="../images/summary.png" alt="">数据汇总分析</h5>
+                <ul>
+                    <li class="more">
+                    <a href="javascript:;" dataHref="Data_summary/index.html" dataType="2">
+                    	更多>></a></li>
+                </ul>
+            </div>
+            <div class="tabDiv">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th>全部</th>
+                        <th>待维修</th>
+                        <th>维修中</th>
+                        <th>待评价</th>
+                        <th>已完成</th>
+                    </tr>
+                    </thead>
+                    <tbody id="dataSummaryTab">
+                    <tr>
+                        <td>ddddd</td>
+                        <td>ddddd</td>
+                        <td>ddddd</td>
+                        <td>ddddd</td>
+                        <td>ddddd</td>
+                        <td>ddddd</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <div style="margin: 20px 0 15px;">
+                <span style="margin-left:50px;height: 10px;width: 20px;border-radius: 10px;background:#548DF5;display: inline-block;margin-right: 10px">
+                </span><span>报修趋势分析</span></div>
+                <div id="container" style="width:100%;height:250px;margin:0 auto ;overflow-y:auto;"></div>
+            </div>
+
+        </div>
+    </div>
+    <div class="statistics" style="margin-top: 20px">
+        <div class="workload">
+            <div class="tab">
+                <div class="nav">
+                    <h5><img src="../images/workload.png" alt="">个人工作量统计</h5>
+                    <ul>
+                        <li><span class="cur" dataState="本年" onclick="initWorkLoad('year')">本年</span></li>
+                        <li><span dataState="本月" onclick="initWorkLoad('month')">本月</span></li>
+                        <li class="more"><a href="javascript:;" dataHref="Maintain_ranking_workload/index.html" dataType="3" dataID="0">更多>></a></li>
+                    </ul>
+                </div>
+                <div class="tabDiv">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>维修工</th>
+                            <th>工作量</th>
+                            <th>费用</th>
+                        </tr>
+                        </thead>
+                        <tbody id="workLoadTab">
+                        <tr>
+                            <td>ddddd</td>
+                            <td>ddddd</td>
+                            <td>ddddd</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="satisfaction">
+            <div class="tab">
+                <div class="nav">
+                    <h5><img src="../images/satisfaction.png" alt="">个人满意度排名</h5>
+                    <ul>
+                        <li><span class="cur" dataState="本年"
+                         onclick="initSatisfaction('year')">本年</span></li>
+                        <li><span dataState="本月" onclick="initSatisfaction('month')">本月</span></li>
+                        <li class="more"><a href="javascript:;" dataHref="Maintain_ranking_satisfaction/index.html" dataType="3" dataID="1">更多>></a></li>
+                    </ul>
+                </div>
+                <div class="tabDiv">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>维修工</th>
+                            <th>评价次数</th>
+                            <th>平均分</th>
+
+                        </tr>
+                        </thead>
+                        <tbody id="satisfactionTab">
+                        <tr>
+                            <td>ddddd</td>
+                            <td>ddddd</td>
+                            <td>ddddd</td>
+                            <td>ddddd</td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        initDeclare('');
+        initDataSummary();
+        initMaintainTrend();
+        //initWorkLoad('year');
+        //initSatisfaction('year');
+        $.post('/lygsbxt/report/homeWorks',{'time':'year'},
+        		function (data) {
+		            bindWorkLoad(data.data);
+		        }
+        );
+        $.post('/lygsbxt/report/homeStars',{'time':'year'},
+        		function (data) {
+		        	bindSatisfaction(data.data);
+		        }
+        );
+    });
+    //渲染维修申报
+    function initDeclare(state) {
+        /*var para={
+            url:'/lygsbxt/maintainorder/maintainorderListReportIndex',
+            async: false,
+            data:{state:state},
+            successHandler:function (data) {
+                bindDeclare(data.data.page);
+            }
+        };
+        ajaxSubmit(para);*/
+        $.post('/lygsbxt/maintainorder/maintainorderListReportIndex',
+        		{'state':state},function (data) {
+        	bindDeclare(data.data.page);
+        });
+    }
+
+    function bindDeclare(data) {
+        var str='';
+        for(var i=0;i<data.length;i++){
+        	var state = '';
+        	if(data[i].status == '未派单') {
+        		state = '<font color="blus">待维修</font>';
+        	} else if (data[i].status == '维修中') {
+        		state = '<font color="green">维修中</font>';
+        	} else if (data[i].status == '待评价') {
+        		state = '<font color="orange">待评价</font>';
+        	} else if (data[i].status == '已完成') {
+        		state = '<font color="black">已完成</font>';
+        	}
+        	var maintainusername = '<font color="red">无</font>';
+        	if(typeof(data[i].maintainuser.realname) == 'string') {
+        		maintainusername = data[i].maintainuser.realname;
+        	}
+            str+=' <tr>\n' +
+                '                        <td>'+data[i].orderid+'</td>\n' +
+                '                        <td>'+data[i].title+'</td>\n' +
+                '                        <td>'+data[i].content+'</td>\n' +
+                '                        <td>'+data[i].wxuser.nickname+'</td>\n' +
+                '                        <td>'+data[i].createtimeStr+'</td>\n' +
+                '                        <td>'+maintainusername+'</td>\n' +
+                '                        <td>'+state+'</td>\n' +
+                '                    </tr>'
+        }
+        $('#declareTab').html(str);
+    }
+
+    $('.declare li span').click(function () {
+        $(this).addClass('cur');
+        $(this).parent().siblings('li').find('span').removeClass('cur');
+        var state=$(this).attr('dataState');
+        initDeclare(state);
+
+    });
+    //渲染数据汇总
+    function initDataSummary() {
+        /*var para={
+            url:'/lygsbxt/report/dataSummary',
+            async: false,
+            data:{},
+            successHandler:function (data) {
+                bindDataSummary(data.data);
+            }
+        };
+        ajaxSubmit(para)*/
+        $.post('/lygsbxt/report/dataSummary',{},function (data) {
+        	bindDataSummary(data.data);
+        });
+    }
+    function bindDataSummary(data) {
+        var str='';
+        for(var i=0;i<data.length;i++){
+            str+=' <tr>\n' +
+                '                        <td>'+data[i].time+'</td>\n' +
+                '                        <td>'+data[i].all+'</td>\n' +
+                '                        <td>'+data[i].wait+'</td>\n' +
+                '                        <td>'+data[i].maintain+'</td>\n' +
+                '                        <td>'+data[i].maintained+'</td>\n' +
+                '                        <td>'+data[i].completed+'</td>\n' +
+                '                    </tr>'
+        }
+        $('#dataSummaryTab').html(str);
+    }
+    //渲染报修趋势
+    function initMaintainTrend() {
+    	var time=['00:00','08:00','09:00','10:00','11:00','12:00',
+        	'13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','23:59'];
+        /*var para={
+            url:'/lygsbxt/report/dataChart',
+            async: false,
+            data:{},
+            successHandler:function (data) {
+                bindMaintainTrend(time,data.data);
+            }
+        };
+        ajaxSubmit(para);*/
+        $.post('/lygsbxt/report/dataChart',{},function (data) {
+        	bindMaintainTrend(time,data.data);
+        });
+        
+    }
+    function bindMaintainTrend(time,data) {
+        Highcharts.chart('container', {
+            chart: {
+                type: 'spline',
+            },
+            title: {
+                text: '',
+
+            },
+            xAxis: {
+                categories: time,
+                crosshair: true,
+                labels: {
+                    overflow: 'justify'
+                },
+                gridLineColor: '#eee',
+                gridLineWidth: 1
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                },
+                gridLineColor: '#eee',
+                gridLineWidth: 1,
+
+            },
+            tooltip: {
+                shared: true,
+            },
+            legend: {
+                enabled: false
+            },
+            series: [ {
+                name: '报修量',
+                data: data,
+                color: "#3C9DFF",
+            }],
+
+            credits: {
+                enabled:false
+            }
+        });
+    }
+
+    //个人工作量
+    function initWorkLoad(time) {
+        /*var para={
+            url:'/lygsbxt/report/homeWorks',
+            async: false,
+            data:{'time':time},
+            successHandler:function (data) {
+            	console.info(data);
+                bindWorkLoad(data.data);
+            }
+        };
+        ajaxSubmit(para)*/
+        $.post('/lygsbxt/report/homeWorks',{'time':time},function (data) {
+            bindWorkLoad(data.data);
+        });
+    }
+    function bindWorkLoad(data) {
+        var str='';
+        for(var i=0;i<data.length;i++){
+            str+=' <tr>\n' +
+                '                        <td>'+(i+1)+'</td>\n' +
+                '                        <td>'+data[i].realname+'</td>\n' +
+                '                        <td>'+data[i].works+'</td>\n' +
+                '                        <td>'+data[i].charge+'</td>\n' +
+                '                    </tr>'
+        }
+        $('#workLoadTab').html(str);
+    }
+    $('.workload li span').click(function () {
+        $(this).addClass('cur');
+        $(this).parent().siblings('li').find('span').removeClass('cur');
+        //var state=$(this).attr('dataState');
+        //initDeclare(state);
+    });
+    //个人满意度
+    function initSatisfaction(time) {
+        /*var para={
+            url:'/lygsbxt/report/homeStars',
+            async: false,
+            data:{'time':time},
+            successHandler:function (data) {
+            	console.info(data);
+                bindSatisfaction(data.data);
+            }
+        };
+        ajaxSubmit(para)*/
+        $.post('/lygsbxt/report/homeStars',{'time':time},function (data) {
+        	bindSatisfaction(data.data);
+        });
+    }
+    function bindSatisfaction(data) {
+        var str='';
+        for(var i=0;i<data.length;i++){
+        	var averagestars = data[i].averagestars;
+        	averagestars = averagestars.toFixed(1);
+            str+=' <tr>\n' +
+                '                        <td>'+(i+1)+'</td>\n' +
+                '                        <td>'+data[i].realname+'</td>\n' +
+                '                        <td>'+data[i].count+'</td>\n' +
+                '                        <td>'+averagestars+'</td>\n' +
+                '                    </tr>'
+        }
+        $('#satisfactionTab').html(str);
+    }
+    $('.satisfaction li span').click(function () {
+        $(this).addClass('cur');
+        $(this).parent().siblings('li').find('span').removeClass('cur');
+        //var state=$(this).attr('dataState');
+        //initDeclare(state);
+    });
+
+</script>
+<script>
+    $('.more a').click(function () {
+        var href = $(this).attr('dataHref');
+        var type=$(this).attr('dataType');
+        $('#nav a').removeClass('cur');
+        if(type==3){
+            var oId=$(this).attr('dataID');
+            $('.personLi dl').css('display','block');
+            $('.personLi dd').eq(oId).children('a').addClass('curD');
+
+        }else{
+            $('.personLi dl').css('display','none');
+            $('#nav li').eq(type).children('a').addClass('cur');
+        }
+
+        $('#main').load(href);
+    });
+</script>

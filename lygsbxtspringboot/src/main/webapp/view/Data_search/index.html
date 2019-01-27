@@ -1,0 +1,270 @@
+<style>
+    .search_option{
+        height: 50px;
+        background: #EBF5FF;
+        line-height: 50px;
+        padding: 0 15px;
+    }
+    .form:after{
+        display: block;
+        content: '';
+        clear: both;
+    }
+    .form li{
+        height: 50px;
+        line-height: 50px;
+        float: left;
+        margin-right: 20px;
+    }
+    .form label{
+        margin-right: 5px;
+        color: #525053;
+    }
+    .form input{
+        width: 94px;
+        height: 28px;
+        line-height: 28px;
+        border: 1px solid #E6E6E6;
+        outline: none;
+        border-radius: 5px;
+        padding-left:10px;
+
+    }
+    .form select{
+        color:#474747;
+        width: 100px;
+        height: 30px;
+        line-height: 30px;
+        border: 1px solid #E6E6E6;
+        outline: none;
+        border-radius: 5px;
+        padding-left:10px;
+        appearance:none;
+        -moz-appearance:none;
+        -webkit-appearance:none;
+        background-image: url("../images/select_down.png");
+        background-repeat: no-repeat;
+        background-position: calc(100% - 7px) 53%;
+        background-size: 10px 6px;
+
+    }
+
+    .form button{
+        height: 30px;
+        width: 70px;
+        text-align: center;
+        line-height: 30px;
+        color: #fff;
+        outline: none;
+        border: 0;
+        white-space: nowrap;
+        font-size: 14px;
+        border-radius: 5px;
+        cursor: pointer;
+        background: #4E83E3;
+    }
+</style>
+<div>
+    <div class="search_option">
+        <ul class="form">
+            <li>
+                <label>关键词：</label>
+                <input type="text" name="keyword" placeholder="请输入关键词">
+            </li>
+            <li>
+                <label>报修人：</label>
+                <input type="text" placeholder="请输入姓名" name="repairMan">
+            </li>
+            <!-- 
+            <li>
+                <label>时间：</label>
+                <input type="text" name="date" id="date"/>
+            </li>
+             -->
+            <li>
+                <label>维修人：</label>
+                <input type="text" placeholder="请输入姓名" name="maintain">
+            </li>
+            <li>
+                <label>状态：</label>
+                <select name="state">
+                    <option value="">请选择</option>
+                    <option value="待维修">待维修</option>
+                    <option value="维修中">维修中</option>
+                    <option value="待评价">待评价</option>
+                    <option value="已完成">已完成</option>
+                </select>
+            </li>
+            <li style="margin-right:0">
+                <button id="search">查询</button>
+            </li>
+        </ul>
+    </div>
+    <div class="tab">
+        <div class="tabDiv">
+            <table>
+                <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>标题</th>
+                    <th>内容</th>
+                    <th>报修人</th>
+                    <th>报修时间</th>
+                    <th>维修人</th>
+                    <th>状态</th>
+                </tr>
+                </thead>
+                <tbody id="declareTab">
+                <tr>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                </tr>
+                <tr>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                </tr>
+                <tr>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                </tr>
+                </tbody>
+            </table>
+            <div id="page"></div>
+        </div>
+
+    </div>
+</div>
+<script>
+    $(function () {
+        //加载第一页数据
+        pagesize=10;
+        init(1);
+    });
+
+    //绑定数据
+    function contentStr(data) {
+        var str='';
+        for (var i = 0; i < data.page.length; i++) {
+        	var state = '';
+            if(data.page[i].status == '未派单') {
+                state = '<font color="blus">待维修</font>';
+            } else if (data.page[i].status == '维修中') {
+                state = '<font color="green">维修中</font>';
+            } else if (data.page[i].status == '待评价') {
+                state = '<font color="orange">待评价</font>';
+            } else if (data.page[i].status == '已完成') {
+                state = '<font color="black">已完成</font>';
+            }
+            var maintainusername = '<font color="red">无</font>';
+            if(typeof(data.page[i].maintainuser.realname) == 'string') {
+                maintainusername = data.page[i].maintainuser.realname;
+            }
+            str+=' <tr>\n' +
+                '                        <td>'+data.page[i].orderid+'</td>\n' +
+                '                        <td>'+data.page[i].title+'</td>\n' +
+                '                        <td>'+data.page[i].content+'</td>\n' +
+                '                        <td>'+data.page[i].wxuser.nickname+'</td>\n' +
+                '                        <td>'+data.page[i].createtimeStr+'</td>\n' +
+                '                        <td>'+maintainusername+'</td>\n' +
+                '                        <td>'+state+'</td>\n' +
+                '                    </tr>'
+            /*str += '<tr>\n' +
+                '                <td>' + data.page[i].orderid + '</td>\n' +
+                '                <td>' + data.page[i].title + '</td>\n' +
+                '                <td>' + data.page[i].content + '</td>\n' +
+                '                <td></td>\n' +
+                '                <td></td>\n' +
+                '            </tr>'*/
+        }
+        $('#declareTab').html(str);
+        setpage(data.total);
+    }
+    function init(pageNum) {
+    	cpage = pageNum;
+        var paras={
+            'keyword': $('.form input[name=keyword]').val(),
+            'repairMan': $('.form input[name=repairMan]').val(),
+            //date: $('.form input[name=date]').val(),
+            'maintain': $('.form input[name=maintain]').val(),
+            'state': $('.form select[name=state]').val(),
+            'size': pagesize,
+            'page': cpage,
+        };
+        $.post('/lygsbxt/maintainorder/maintainorderListReportIndexPage',paras,
+        		function (data) {
+		            contentStr(data.data);
+		        }
+        );
+    }
+    $('#search').click(function () {
+        init(1);
+    });
+    
+    function setpage(totalData) {
+        totalpage = Math.ceil(totalData / pagesize);            // 应该上取整，防止少一页
+        if (totalpage <= 5) {        //总页数小于5页
+            for (count = 1; count <= totalpage; count++) {
+                if (count != cpage) {           // 这里应该是!=，少了!
+                    outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + count + "'>" + count + "</a>";
+                } else {
+                    outstr = outstr + "<span class='current' >" + count + "</span>";
+                }
+            }
+        }
+        if (totalpage > 5) {        //总页数大于5页
+            if (parseInt((cpage - 1) / 5) == 0) {
+                for (count = 1; count <= 5; count++) {
+                    if (count != cpage) {
+
+                        outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + count + "'>" + count + "</a>";
+                    } else {
+
+                        outstr = outstr + "<span class='current'>" + count + "</span>";
+                    }
+                }
+                outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + count + "'> next </a>";
+            }
+            else if (parseInt((cpage - 1) / 5) == parseInt(totalpage / 5)) {
+                outstr = outstr + "<a href='javascript:init("+(parseInt((cpage - 1) / 5) * 5)+")' class='jump' dataCount='" + (parseInt((cpage - 1) / 5) * 5) + "''>prev</a>";
+                for (count = parseInt(totalpage / 5) * 5 + 1; count <= totalpage; count++) {
+                    if (count != cpage) {
+                        outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + count + "'>" + count + "</a>";
+                    } else {
+                        outstr = outstr + "<span class='current'>" + count + "</span>";
+                    }
+                }
+            } 
+            else {
+                outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + (parseInt((cpage - 1) / 5) * 5) + "'>prev</a>";
+                for (count = parseInt((cpage - 1) / 5) * 5 + 1; count <= parseInt((cpage - 1) / 5) * 5 + 5; count++) {
+                    if (count != cpage) {
+                        outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + count + "'>" + count + "</a>";
+                    } else {
+                        outstr = outstr + "<span class='current'>" + count + "</span>";
+                    }
+                }
+                if (Math.ceil(cpage / 5) != Math.ceil(totalpage / 5)) {
+                    outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + count + "'> next </a>";
+                }
+                
+            }
+        }
+        document.getElementById("page").innerHTML = "<span id='info'>共" + totalData + "条数据|第" + cpage + "页</span>" + outstr ;
+        outstr = "";
+    }
+</script>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%;">
+<head>
+    <meta charset="UTF-8">
+    <title>连云港职业技术学院</title>
+    <meta name="keywords" content="连云港职业技术学院,维修服务平台,维修服务,连职大" />
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/public.css">
+    <!-- 
+    <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="../css/bootstrap-datetimepicker.min.css">
+     -->
+    <script src="../js/jquery-1.12.3.min.js"></script>
+    <script src="../js/highcharts.js"></script>
+    <script src="../js/page.js"></script>
+    <script src="../js/public.js"></script>
+    <!-- 
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+     -->
+    <script src="../js/public.js"></script>
+</head>
+<body style="height:100%;">
+<div class="header">
+    <div class="header_inner">
+        <div class="logo">
+            <img src="../images/logo.png" alt="" class="logoImg">
+            <!-- <span>维修服务平台</span> -->
+            <img src="../images/rrsp.png" style="margin-bottom:2px;" alt="" class="rpsImg">
+        </div>
+        <div class="customer">
+            <img src="../images/customer.png" alt="">
+        </div>
+        <ul class="nav" id="nav">
+            <li><a href="javascript:;" class="cur" dataHref="Home/index.html">平台首页</a></li>
+            <li><a href="javascript:;" dataHref="Data_search/index.html">数据查询</a></li>
+            <li><a href="javascript:;" dataHref="Data_summary/index.html">数据汇总</a></li>
+            <li class="personLi">
+                <a href="javascript:;" >维修排名</a>
+                <dl>
+                    <dd><a href="javascript:;" dataHref="Maintain_ranking_workload/index.html">个人工作量统计</a></dd>
+                    <dd><a href="javascript:;" dataHref="Maintain_ranking_satisfaction/index.html">个人满意度排名</a></dd>
+                </dl>
+                <img src="../images/selectIcon.png" alt="">
+            </li>
+            <li><a href="javascript:;" dataHref="Maintain_team/index.html">维修队伍</a></li>
+            <li class="search">
+            <font color="white" style="font-weight:bold;font-size:20px;">0518-85985199&nbsp;&nbsp;&nbsp;</font></li>
+            <!-- <li class="search">
+            <span><input type="text" placeholder="输入报修内容进行检索">
+            <img src="../images/search.png" alt=""></span></li> -->
+        </ul>
+
+    </div>
+</div>
+<div class="main" id="main"></div>
+<div class="footer">版权所有©连云港职业技术学院后勤管理处</div>
+<script>
+    //点击切换页面
+    $(function () {
+    	var h=$(document).height()-280;
+        $('#main').css('minHeight',h)
+        var href = $('#nav li:first').find('a').attr('dataHref');
+        var firstPage = null;
+        if (href) {
+            firstPage = href;
+            $('#nav li:first').find('a').addClass('cur');
+        }
+        $('#main').load(firstPage);
+    });
+    $('#nav a').click(function () {
+        var href = $(this).attr('dataHref');
+        var par=$(this).parent();
+        $('#nav a').removeClass('cur');
+        if(par.is('dd')){
+            //par.parent().prev('a').addClass('cur');
+            $(this).addClass('curD');
+            par.siblings('dd').find('a').removeClass('curD')
+        }else{
+
+            if($(this).is($('.personLi').children('a'))){
+                $(this).next('dl').css('display','block')
+            }else{
+                $(this).addClass('cur');
+                $('dl').css('display','none');
+                $('.personLi a').removeClass('curD');
+            }
+        }
+        if(href){
+            $('#main').load(href);
+        }
+
+    });
+    $('.personLi').mouseout(function () {
+        $(this).find('dl').css('display','none');
+
+    });
+    $('.personLi').mouseover(function () {
+        $(this).find('dl').css('display','block')
+    })
+</script>
+</body>
+</html>

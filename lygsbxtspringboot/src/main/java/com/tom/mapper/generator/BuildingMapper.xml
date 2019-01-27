@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tom.dao.generator.BuildingMapper">
+  <resultMap id="BaseResultMap" type="com.tom.model.generator.Building">
+    <id column="buildid" jdbcType="VARCHAR" property="buildid" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="firstpicture" jdbcType="VARCHAR" property="firstpicture" />
+    <result column="allstars" jdbcType="INTEGER" property="allstars" />
+    <result column="commentcount" jdbcType="INTEGER" property="commentcount" />
+    <result column="averagestars" jdbcType="REAL" property="averagestars" />
+    <result column="isdelete" jdbcType="INTEGER" property="isdelete" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    buildid, type, name, firstpicture, allstars, commentcount, averagestars, isdelete
+  </sql>
+  <select id="selectByExample" parameterType="com.tom.model.generator.BuildingExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from building
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from building
+    where buildid = #{buildid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from building
+    where buildid = #{buildid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tom.model.generator.BuildingExample">
+    delete from building
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tom.model.generator.Building">
+    insert into building (buildid, type, name, 
+      firstpicture, allstars, commentcount, 
+      averagestars, isdelete)
+    values (#{buildid,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{firstpicture,jdbcType=VARCHAR}, #{allstars,jdbcType=INTEGER}, #{commentcount,jdbcType=INTEGER}, 
+      #{averagestars,jdbcType=REAL}, #{isdelete,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tom.model.generator.Building">
+    insert into building
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="buildid != null">
+        buildid,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="firstpicture != null">
+        firstpicture,
+      </if>
+      <if test="allstars != null">
+        allstars,
+      </if>
+      <if test="commentcount != null">
+        commentcount,
+      </if>
+      <if test="averagestars != null">
+        averagestars,
+      </if>
+      <if test="isdelete != null">
+        isdelete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="buildid != null">
+        #{buildid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="firstpicture != null">
+        #{firstpicture,jdbcType=VARCHAR},
+      </if>
+      <if test="allstars != null">
+        #{allstars,jdbcType=INTEGER},
+      </if>
+      <if test="commentcount != null">
+        #{commentcount,jdbcType=INTEGER},
+      </if>
+      <if test="averagestars != null">
+        #{averagestars,jdbcType=REAL},
+      </if>
+      <if test="isdelete != null">
+        #{isdelete,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tom.model.generator.BuildingExample" resultType="java.lang.Long">
+    select count(*) from building
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update building
+    <set>
+      <if test="record.buildid != null">
+        buildid = #{record.buildid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstpicture != null">
+        firstpicture = #{record.firstpicture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allstars != null">
+        allstars = #{record.allstars,jdbcType=INTEGER},
+      </if>
+      <if test="record.commentcount != null">
+        commentcount = #{record.commentcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.averagestars != null">
+        averagestars = #{record.averagestars,jdbcType=REAL},
+      </if>
+      <if test="record.isdelete != null">
+        isdelete = #{record.isdelete,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update building
+    set buildid = #{record.buildid,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      firstpicture = #{record.firstpicture,jdbcType=VARCHAR},
+      allstars = #{record.allstars,jdbcType=INTEGER},
+      commentcount = #{record.commentcount,jdbcType=INTEGER},
+      averagestars = #{record.averagestars,jdbcType=REAL},
+      isdelete = #{record.isdelete,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tom.model.generator.Building">
+    update building
+    <set>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="firstpicture != null">
+        firstpicture = #{firstpicture,jdbcType=VARCHAR},
+      </if>
+      <if test="allstars != null">
+        allstars = #{allstars,jdbcType=INTEGER},
+      </if>
+      <if test="commentcount != null">
+        commentcount = #{commentcount,jdbcType=INTEGER},
+      </if>
+      <if test="averagestars != null">
+        averagestars = #{averagestars,jdbcType=REAL},
+      </if>
+      <if test="isdelete != null">
+        isdelete = #{isdelete,jdbcType=INTEGER},
+      </if>
+    </set>
+    where buildid = #{buildid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tom.model.generator.Building">
+    update building
+    set type = #{type,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      firstpicture = #{firstpicture,jdbcType=VARCHAR},
+      allstars = #{allstars,jdbcType=INTEGER},
+      commentcount = #{commentcount,jdbcType=INTEGER},
+      averagestars = #{averagestars,jdbcType=REAL},
+      isdelete = #{isdelete,jdbcType=INTEGER}
+    where buildid = #{buildid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tom.dao.generator.MaintainorderMapper">
+  <resultMap id="BaseResultMap" type="com.tom.model.generator.Maintainorder">
+    <id column="orderid" jdbcType="VARCHAR" property="orderid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="wxuserid" jdbcType="VARCHAR" property="wxuserid" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="officertime" jdbcType="TIMESTAMP" property="officertime" />
+    <result column="maintaintime" jdbcType="TIMESTAMP" property="maintaintime" />
+    <result column="commenttime" jdbcType="TIMESTAMP" property="commenttime" />
+    <result column="isdelete" jdbcType="INTEGER" property="isdelete" />
+    <result column="maintainid" jdbcType="VARCHAR" property="maintainid" />
+    <result column="officerid" jdbcType="VARCHAR" property="officerid" />
+    <result column="charge" jdbcType="REAL" property="charge" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    orderid, title, address, content, wxuserid, createtime, status, officertime, maintaintime, 
+    commenttime, isdelete, maintainid, officerid, charge
+  </sql>
+  <select id="selectByExample" parameterType="com.tom.model.generator.MaintainorderExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from maintainorder
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from maintainorder
+    where orderid = #{orderid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from maintainorder
+    where orderid = #{orderid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tom.model.generator.MaintainorderExample">
+    delete from maintainorder
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tom.model.generator.Maintainorder">
+    insert into maintainorder (orderid, title, address, 
+      content, wxuserid, createtime, 
+      status, officertime, maintaintime, 
+      commenttime, isdelete, maintainid, 
+      officerid, charge)
+    values (#{orderid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{wxuserid,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{officertime,jdbcType=TIMESTAMP}, #{maintaintime,jdbcType=TIMESTAMP}, 
+      #{commenttime,jdbcType=TIMESTAMP}, #{isdelete,jdbcType=INTEGER}, #{maintainid,jdbcType=VARCHAR}, 
+      #{officerid,jdbcType=VARCHAR}, #{charge,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tom.model.generator.Maintainorder">
+    insert into maintainorder
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderid != null">
+        orderid,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="wxuserid != null">
+        wxuserid,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="officertime != null">
+        officertime,
+      </if>
+      <if test="maintaintime != null">
+        maintaintime,
+      </if>
+      <if test="commenttime != null">
+        commenttime,
+      </if>
+      <if test="isdelete != null">
+        isdelete,
+      </if>
+      <if test="maintainid != null">
+        maintainid,
+      </if>
+      <if test="officerid != null">
+        officerid,
+      </if>
+      <if test="charge != null">
+        charge,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderid != null">
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="wxuserid != null">
+        #{wxuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="officertime != null">
+        #{officertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="maintaintime != null">
+        #{maintaintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commenttime != null">
+        #{commenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdelete != null">
+        #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="maintainid != null">
+        #{maintainid,jdbcType=VARCHAR},
+      </if>
+      <if test="officerid != null">
+        #{officerid,jdbcType=VARCHAR},
+      </if>
+      <if test="charge != null">
+        #{charge,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tom.model.generator.MaintainorderExample" resultType="java.lang.Long">
+    select count(*) from maintainorder
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update maintainorder
+    <set>
+      <if test="record.orderid != null">
+        orderid = #{record.orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wxuserid != null">
+        wxuserid = #{record.wxuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.officertime != null">
+        officertime = #{record.officertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.maintaintime != null">
+        maintaintime = #{record.maintaintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.commenttime != null">
+        commenttime = #{record.commenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isdelete != null">
+        isdelete = #{record.isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="record.maintainid != null">
+        maintainid = #{record.maintainid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.officerid != null">
+        officerid = #{record.officerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.charge != null">
+        charge = #{record.charge,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update maintainorder
+    set orderid = #{record.orderid,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      wxuserid = #{record.wxuserid,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=VARCHAR},
+      officertime = #{record.officertime,jdbcType=TIMESTAMP},
+      maintaintime = #{record.maintaintime,jdbcType=TIMESTAMP},
+      commenttime = #{record.commenttime,jdbcType=TIMESTAMP},
+      isdelete = #{record.isdelete,jdbcType=INTEGER},
+      maintainid = #{record.maintainid,jdbcType=VARCHAR},
+      officerid = #{record.officerid,jdbcType=VARCHAR},
+      charge = #{record.charge,jdbcType=REAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tom.model.generator.Maintainorder">
+    update maintainorder
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="wxuserid != null">
+        wxuserid = #{wxuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="officertime != null">
+        officertime = #{officertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="maintaintime != null">
+        maintaintime = #{maintaintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commenttime != null">
+        commenttime = #{commenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdelete != null">
+        isdelete = #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="maintainid != null">
+        maintainid = #{maintainid,jdbcType=VARCHAR},
+      </if>
+      <if test="officerid != null">
+        officerid = #{officerid,jdbcType=VARCHAR},
+      </if>
+      <if test="charge != null">
+        charge = #{charge,jdbcType=REAL},
+      </if>
+    </set>
+    where orderid = #{orderid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tom.model.generator.Maintainorder">
+    update maintainorder
+    set title = #{title,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      wxuserid = #{wxuserid,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      officertime = #{officertime,jdbcType=TIMESTAMP},
+      maintaintime = #{maintaintime,jdbcType=TIMESTAMP},
+      commenttime = #{commenttime,jdbcType=TIMESTAMP},
+      isdelete = #{isdelete,jdbcType=INTEGER},
+      maintainid = #{maintainid,jdbcType=VARCHAR},
+      officerid = #{officerid,jdbcType=VARCHAR},
+      charge = #{charge,jdbcType=REAL}
+    where orderid = #{orderid,jdbcType=VARCHAR}
+  </update>
+</mapper>

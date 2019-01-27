@@ -1,0 +1,42 @@
+body,div,dl,dt,dd,tr,td,ul,li,h1,h2,h3,h4,h5,h6,input,form,a,p,textarea{
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    font-family: Microsoft yahei, Arial, Helvetica, sans-serif;
+}
+body{
+    background-color: #f5f5f5;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+ol,ul,li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+    display: block;
+}
+img{
+    border: none;
+}
+input::-webkit-input-placeholder{
+    color: #a9a9a9;
+    font-size: 12px;
+}
+input:-moz-placeholder{
+    color: #a9a9a9;
+    font-size: 12px;
+}
+input::-moz-placeholder{
+    color: #a9a9a9;
+    font-size: 12px;
+}
+input:-ms-input-placeholder{
+    color: #a9a9a9;
+    font-size: 12px;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+

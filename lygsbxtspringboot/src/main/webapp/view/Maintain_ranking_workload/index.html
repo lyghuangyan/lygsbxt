@@ -1,0 +1,123 @@
+<div>
+    <div class="tab">
+        <div class="tabDiv">
+            <table>
+                <thead>
+                <tr>
+                    <th>编号</th>
+                          <th>维修工</th>
+                            <th>工作量</th>
+                            <th>费用</th>
+                </tr>
+                </thead>
+                <tbody id="tBody">
+                <tr>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                </tr>
+                <tr>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                </tr>
+                <tr>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                    <td>ddddd</td>
+                </tr>
+                </tbody>
+            </table>
+            <div id="page"></div>
+        </div>
+
+    </div>
+</div>
+<script>
+    $(function () {
+    	pagesize=20;
+        //加载第一页数据
+        init(1);
+    });
+
+    //绑定数据
+    function contentStr(data) {
+    	var str='';
+        for (var i = 0; i < data.page.length; i++) {
+            str += '<tr>\n' +
+            '                <td>' + (i+1) + '</td>\n' +
+            '                <td>' + data.page[i].realname + '</td>\n' +
+            '                <td>' + data.page[i].works + '</td>\n' +
+            '                <td>' + data.page[i].charge + '</td>\n' +
+            '            </tr>'
+        }
+        $('#tBody').html(str);
+        
+        setpage(data.total);
+    }
+    function init(pageNum) {
+    	var paras={
+                'size': pagesize,
+                'page': pageNum,
+            };
+            $.post('/lygsbxt/report/works',paras,function (data) {
+                contentStr(data.data);
+            });
+    }
+    function setpage(totalData) {
+        totalpage = Math.ceil(totalData / pagesize);            // 应该上取整，防止少一页
+        if (totalpage <= 5) {        //总页数小于5页
+            for (count = 1; count <= totalpage; count++) {
+                if (count != cpage) {           // 这里应该是!=，少了!
+                    outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + count + "'>" + count + "</a>";
+                } else {
+                    outstr = outstr + "<span class='current' >" + count + "</span>";
+                }
+            }
+        }
+        if (totalpage > 5) {        //总页数大于5页
+            if (parseInt((cpage - 1) / 5) == 0) {
+                for (count = 1; count <= 5; count++) {
+                    if (count != cpage) {
+
+                        outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + count + "'>" + count + "</a>";
+                    } else {
+
+                        outstr = outstr + "<span class='current'>" + count + "</span>";
+                    }
+                }
+                outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + count + "'> next </a>";
+            }
+            else if (parseInt((cpage - 1) / 5) == parseInt(totalpage / 5)) {
+                outstr = outstr + "<a href='javascript:init("+(parseInt((cpage - 1) / 5) * 5)+")' class='jump' dataCount='" + (parseInt((cpage - 1) / 5) * 5) + "''>prev</a>";
+                for (count = parseInt(totalpage / 5) * 5 + 1; count <= totalpage; count++) {
+                    if (count != cpage) {
+                        outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + count + "'>" + count + "</a>";
+                    } else {
+                        outstr = outstr + "<span class='current'>" + count + "</span>";
+                    }
+                }
+            } 
+            else {
+                outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + (parseInt((cpage - 1) / 5) * 5) + "'>prev</a>";
+                for (count = parseInt((cpage - 1) / 5) * 5 + 1; count <= parseInt((cpage - 1) / 5) * 5 + 5; count++) {
+                    if (count != cpage) {
+                        outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + count + "'>" + count + "</a>";
+                    } else {
+                        outstr = outstr + "<span class='current'>" + count + "</span>";
+                    }
+                }
+                if (Math.ceil(cpage / 5) != Math.ceil(totalpage / 5)) {
+                    outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + count + "'> next </a>";
+                }
+                
+            }
+        }
+        document.getElementById("page").innerHTML = "<span id='info'>共" + totalData + "条数据|第" + cpage + "页</span>" + outstr ;
+        outstr = "";
+    }
+
+</script>

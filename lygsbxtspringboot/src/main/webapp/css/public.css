@@ -1,0 +1,112 @@
+.tab{
+    /*margin-top: 20px;*/
+}
+.tab .nav{
+    background: #EBF5FF;
+    height: 45px;
+    line-height: 45px;
+    padding: 0 15px;
+
+}
+.tab .nav h5{
+    color: #3C9DFF;
+    float: left;
+    margin-right: 5px;
+}
+.tab .nav h5 img{
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.tab .nav li{
+    float: left;
+    margin-left: 10px;
+    color: #666;
+}
+.tab .nav li span{
+    padding: 2px 10px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+.tab .nav span.cur{
+    background: #FF9A18;
+    color: #fff;
+}
+.tab .nav li.more{
+    float: right;
+}
+.tab .nav .more a{
+    color: #3C9DFF;
+}
+.tab .tabDiv{
+    background: #fff;
+    padding: 10px 15px;
+}
+
+.tab table{
+    width: 100%;
+    border: 1px solid #EBF5FF;
+    table-layout: auto;
+
+}
+.tab tr{
+    width: 100%;
+}
+
+.tab th{
+    height: 34px;
+    line-height: 34px;
+    background: #EBF5FF;
+    font-size: 14px;
+    border-bottom: 1px solid #E7E7E7;
+    color: #3C9DFF;
+    text-align: left;
+    padding: 0 5px;
+}
+.tab td{
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    border-bottom: 1px solid #E7E7E7;
+    text-align: left;
+    padding: 0 5px;
+}
+
+
+/*分页*/
+#page{
+    text-align: center;
+    margin: 20px auto;
+    height: 30px;
+    line-height: 30px;
+}
+
+
+
+#page a:link, #page a:visited, #page a:hover, #page .current, #info {
+    border: 1px solid #DDD;
+    background: #F2F2F2;
+    display: inline-block;
+    margin:0 2px;
+    text-decoration: none;
+    font-size: 14px;
+    text-align: center;
+    color: #00A4EB;
+    padding: 0 10px;
+}
+#info{
+    color: #666;
+}
+
+
+
+#page a:hover {
+    border: 1px solid #E5E5E5;
+    background: #F9F9F9;
+}
+
+#page .current {
+    border: 1px solid #00A4EB;
+    background: #00A4EB;
+    margin: 1px;
+    color: #fff;
+}

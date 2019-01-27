@@ -1,0 +1,151 @@
+<style>
+    .memList:after{
+        display: block;
+        content: '';
+        clear:both;
+    }
+    .memList li{
+        float: left;
+        width: 390px;
+        border-radius: 5px;
+        background: #fff;
+        margin-right: 15px;
+        margin-top: 10px;
+        height: 160px;
+        overflow: hidden;
+    }
+    .memList li:nth-child(3n){
+        margin-right: 0;
+    }
+    .memList li img{
+        height: 160px;
+        width: 180px;
+        float: left;
+    }
+    .memList li div{
+        float: left;
+        height: 160px;
+        width: 180px;
+        padding-left: 30px;
+    }
+    .memList li div h5{
+        line-height: 30px;
+        margin-top: 40px;
+        color: #333;
+        font-size: 16px;
+    }
+    .memList li div p{
+        color: #666;
+    }
+</style>
+<div>
+    <ul class="memList" id="tBody">
+        <li>
+            <img src="../images/search.png" alt="">
+            <div>
+                <h5>kk</h5>
+                <p>jjjj</p>
+            </div>
+        </li>
+        <li>
+            <img src="../images/search.png" alt="">
+            <div>
+                <h5>kk</h5>
+                <p>jjjj</p>
+            </div>
+        </li>
+        <li>
+            <img src="../images/search.png" alt="">
+            <div>
+                <h5>kk</h5>
+                <p>jjjj</p>
+            </div>
+        </li>
+    </ul>
+    <div id="page"></div>
+</div>
+<script>
+    $(function () {
+        //鍔犺浇绗竴椤垫暟鎹�
+        pagesize=9;
+        init(1);
+    	setpage(100)
+    });
+
+    //缁戝畾鏁版嵁
+    function contentStr(data) {
+        var str='';
+        for (var i = 0; i < data.page.length; i++) {
+            str += '<li><img src="/lygsbxt'
+            	+data.page[i].photourl+'" alt=""><div>'
+            	+'<h5>'+data.page[i].realname+'</h5><p>'
+            	+data.page[i].username+'</p></div></li>'
+        }
+        $('#tBody').html(str);
+        
+        setpage(data.total);
+    }
+    function init(pageNum) {
+    	cpage = pageNum;
+        var paras={
+            'page': pageNum,
+            'size': pagesize,
+        };
+        $.post('/lygsbxt/maintainuser/pageMaintainuser',paras,function (data) {
+            contentStr(data.data);
+        });
+    }
+
+    function setpage(totalData) {
+        totalpage = Math.ceil(totalData / pagesize);            // 应该上取整，防止少一页
+        if (totalpage <= 5) {        //总页数小于5页
+            for (count = 1; count <= totalpage; count++) {
+                if (count != cpage) {           // 这里应该是!=，少了!
+                    outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + count + "'>" + count + "</a>";
+                } else {
+                    outstr = outstr + "<span class='current' >" + count + "</span>";
+                }
+            }
+        }
+        if (totalpage > 5) {        //总页数大于5页
+            if (parseInt((cpage - 1) / 5) == 0) {
+                for (count = 1; count <= 5; count++) {
+                    if (count != cpage) {
+
+                        outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + count + "'>" + count + "</a>";
+                    } else {
+
+                        outstr = outstr + "<span class='current'>" + count + "</span>";
+                    }
+                }
+                outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + count + "'> next </a>";
+            }
+            else if (parseInt((cpage - 1) / 5) == parseInt(totalpage / 5)) {
+                outstr = outstr + "<a href='javascript:init("+(parseInt((cpage - 1) / 5) * 5)+")' class='jump' dataCount='" + (parseInt((cpage - 1) / 5) * 5) + "''>prev</a>";
+                for (count = parseInt(totalpage / 5) * 5 + 1; count <= totalpage; count++) {
+                    if (count != cpage) {
+                        outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + count + "'>" + count + "</a>";
+                    } else {
+                        outstr = outstr + "<span class='current'>" + count + "</span>";
+                    }
+                }
+            } 
+            else {
+                outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + (parseInt((cpage - 1) / 5) * 5) + "'>prev</a>";
+                for (count = parseInt((cpage - 1) / 5) * 5 + 1; count <= parseInt((cpage - 1) / 5) * 5 + 5; count++) {
+                    if (count != cpage) {
+                        outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + count + "'>" + count + "</a>";
+                    } else {
+                        outstr = outstr + "<span class='current'>" + count + "</span>";
+                    }
+                }
+                if (Math.ceil(cpage / 5) != Math.ceil(totalpage / 5)) {
+                    outstr = outstr + "<a href='javascript:init("+count+")' class='jump' dataCount='" + count + "'> next </a>";
+                }
+                
+            }
+        }
+        document.getElementById("page").innerHTML = "<span id='info'>共" + totalData + "条数据|第" + cpage + "页</span>" + outstr ;
+        outstr = "";
+    }
+</script>
